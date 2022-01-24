@@ -1,0 +1,74 @@
+{
+    "env": {
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "prettier/react"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "prettier"
+    ],
+    "settings": {
+        "import/resolver": {
+            "typescript": {
+                "directory": "./tsconfig.json"
+            },
+            "node": {
+                "extensions": [
+                    ".tsx",
+                    ".ts"
+                ],
+                "paths": [
+                    "src"
+                ]
+            },
+            "babel-plugin-root-import": {
+                "rootPathPrefix": "~/*",
+                "rootPathSuffix": "src/*"
+            }
+        },
+        "import/extensions": [
+            ".ts",
+            ".tsx"
+        ],
+        "import/parsers": {
+            "@typescript-eslint/parser": [
+                ".ts",
+                ".tsx"
+            ]
+        }
+    },
+    "rules": {
+        "prettier/prettier": "error",
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".tsx",
+                    ".ts"
+                ]
+            }
+        ],
+        "react/function-component-definition": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "no-use-before-define": "error",
+        "import/prefer-default-export": "off",
+        "react/jsx-props-no-spreading": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "warn"
+        ]
+    }
+}
