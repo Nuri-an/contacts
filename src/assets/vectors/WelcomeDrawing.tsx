@@ -1,6 +1,6 @@
 import Svg, { G, Path } from 'react-native-svg';
 
-export const LoginIllustration: React.FC = () => (
+export const WelcomeDrawing: React.FC = () => (
   <Svg width="303" height="303" viewBox="0 0 303 303" fill="none">
     <Path
       d="M247.854 146.822C194.278 115.916 107.698 115.916 54.4673 146.822C1.23624 177.728 1.5453 227.911 55.146 258.841C108.747 289.771 195.302 289.777 248.533 258.841C301.764 227.904 301.455 177.758 247.854 146.822Z"

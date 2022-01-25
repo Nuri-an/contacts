@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { ReactElement } from 'react';
-import { Signin } from '~/screens';
+import { Onboarding } from '~/screens';
 
 const Stack = createStackNavigator();
 
@@ -9,8 +9,8 @@ function AuthRoutes(): ReactElement {
     <Stack.Navigator>
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Signin"
-        component={Signin}
+        name="Onboarding"
+        component={Onboarding}
       />
     </Stack.Navigator>
   );
