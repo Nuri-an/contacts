@@ -5012,7 +5012,7 @@ expo-asset@~8.4.6:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
-expo-constants@~13.0.0:
+expo-constants@~13.0.0, expo-constants@~13.0.1:
   version "13.0.1"
   resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-13.0.1.tgz"
   integrity sha512-48rhXCZMJGVx/v4DEd9PqTY6V/xLgtWHBy8nos27QIpYCyiC27I3QUQEUI1T3MXUwBsIR4LLJuwnD/4IfftrBw==
