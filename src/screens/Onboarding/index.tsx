@@ -1,9 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import { ReactElement } from 'react';
 import { WelcomeDrawing } from '~/assets/vectors/WelcomeDrawing';
 import { Button } from '~/components';
 import * as S from './styles';
 
 function Onboarding(): ReactElement {
+  const navigation = useNavigation();
   return (
     <S.Container>
       <WelcomeDrawing />
@@ -12,7 +14,12 @@ function Onboarding(): ReactElement {
         Para ter acesso a todas as funcionalidades que podemos oferecer, faça
         login ou crie uma nova conta.
       </S.SubTitle>
-      <Button style="default" color="primary" text="Começar" />
+      <Button
+        style="default"
+        color="primary"
+        text="Começar"
+        onPress={() => navigation.navigate('Signin')}
+      />
     </S.Container>
   );
 }

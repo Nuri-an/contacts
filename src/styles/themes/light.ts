@@ -6,6 +6,7 @@ export default {
     textWhite: '#F1F1F1',
     textBlack: '#424242',
     textPlaceholder: '#495057',
+    inputBackground: '#F1F3F5',
     red: '#FC3333',
   },
   fontFamily: {
@@ -17,7 +18,7 @@ export default {
     title: 20,
     titleSecundary: 18,
     text: 16,
-    TextSecundary: 14,
+    textSecundary: 14,
   },
   breakpoints: {
     sm: 280,
