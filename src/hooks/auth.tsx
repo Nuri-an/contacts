@@ -30,6 +30,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       );
 
       if (storagedSigned && storagedToken) {
+        api.defaults.headers.common.Authorization = `Bearer ${storagedToken}`;
         setAuthData({
           signed: true,
           token: storagedToken,
@@ -54,6 +55,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     try {
       const { data: user } = await AuthService.signin(data);
 
+      api.defaults.headers.common.Authorization = `Bearer ${user.token}`;
       AsyncStorage.setItem(`${PREFIX}:signed`, 'true');
       AsyncStorage.setItem(`${PREFIX}:token`, user.token);
       AsyncStorage.setItem(`${PREFIX}:expires_at`, user.expires_at);
@@ -62,8 +64,6 @@ export const AuthProvider: React.FC = ({ children }) => {
         token: user.token,
         expires_at: user.expires_at,
       });
-      // eslint-disable-next-line dot-notation
-      api.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
 
       return true;
     } catch {
