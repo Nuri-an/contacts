@@ -15,7 +15,7 @@ function Onboarding(): ReactElement {
         login ou crie uma nova conta.
       </S.SubTitle>
       <Button
-        style="default"
+        styled="default"
         color="primary"
         text="Começar"
         onPress={() => navigation.navigate('Signin')}

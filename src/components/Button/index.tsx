@@ -1,22 +1,35 @@
 import { ReactElement } from 'react';
+import { ActivityIndicator } from 'react-native';
 import * as S from './styles';
 
 interface IButton {
-  style: 'outline' | 'default';
+  styled: 'outline' | 'default';
   color?: 'red' | 'primary';
   text: string;
+  loading?: boolean;
   onPress: () => void;
 }
 
-function Button({ style, color, text, onPress }: IButton): ReactElement {
+function Button({
+  styled,
+  color,
+  text,
+  loading,
+  onPress,
+}: IButton): ReactElement {
   return (
     <S.Container
-      style={style}
+      style={styled}
       color={color}
+      disabled={loading}
       activeOpacity={0.7}
       onPress={onPress}
     >
-      <S.Text style={style}>{text}</S.Text>
+      {loading ? (
+        <ActivityIndicator color="#fff" />
+      ) : (
+        <S.Text style={styled}>{text}</S.Text>
+      )}
     </S.Container>
   );
 }
