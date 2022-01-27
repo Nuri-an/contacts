@@ -1,15 +1,13 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { ReactElement } from 'react';
-import { useTheme } from 'styled-components';
 import { Onboarding, Signin } from '~/screens';
 import Constants from 'expo-constants';
-import { BackButtonStack, TitleStack } from './components';
 import { RootStackParamList } from '~/@types/RootStackParamList';
+import { BackButtonStack, TitleStack } from './components';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 function AuthRoutes(): ReactElement {
-  const theme = useTheme();
   return (
     <Stack.Navigator
       screenOptions={{
