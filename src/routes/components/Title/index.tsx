@@ -8,7 +8,7 @@ interface HeaderTitleProps {
   onLayout?: (e: LayoutChangeEvent) => void;
 }
 
-function TitleStack(props, { children }: HeaderTitleProps): ReactElement {
-  return <S.Title {...props}>{children}</S.Title>;
+function TitleStack({ children, ...rest }: HeaderTitleProps): ReactElement {
+  return <S.Title {...rest}>{children}</S.Title>;
 }
 export default TitleStack;
