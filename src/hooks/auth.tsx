@@ -62,6 +62,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         token: user.token,
         expires_at: user.expires_at,
       });
+      // eslint-disable-next-line dot-notation
       api.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
 
       return true;
