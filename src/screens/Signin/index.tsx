@@ -1,17 +1,38 @@
 import { Formik } from 'formik';
-import { ReactElement } from 'react';
+import { ReactElement, useCallback, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Button, Input } from '~/components';
 import { ISigninData } from '~/models';
 import { SigninSchema } from '~/schemas';
+import { showMessage } from 'react-native-flash-message';
+import { useAuth } from '~/hooks/auth';
 import * as S from './styles';
 
 function Signin(): ReactElement {
   const initialValues: ISigninData = { email: '', password: '' };
+  const { singIn } = useAuth();
+  const [loading, setLoading] = useState(false);
+
+  const SubmitSigin = useCallback(async (data: ISigninData) => {
+    try {
+      setLoading(true);
+      await singIn(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      if (error instanceof Error) {
+        showMessage({
+          type: 'danger',
+          message: error.message,
+        });
+      }
+    }
+  }, []);
+
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={SubmitSigin}
       validationSchema={SigninSchema}
     >
       {({
@@ -39,19 +60,29 @@ function Signin(): ReactElement {
             <Input
               label="Senha"
               placeholder="Digite sua senha"
+              secureTextEntry
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
               error={!!touched.password && errors.password}
             />
-            <TouchableOpacity activeOpacity={0.6}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() =>
+                showMessage({
+                  type: 'info',
+                  message: 'Em construção...',
+                })
+              }
+            >
               <S.TextHelp>Problemas com login?</S.TextHelp>
             </TouchableOpacity>
           </S.Content>
           <Button
-            style="default"
+            styled="default"
             color="primary"
             text="Entrar"
+            loading={loading}
             onPress={handleSubmit}
           />
         </S.Container>
