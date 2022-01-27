@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import * as S from './styles';
 import { LayoutChangeEvent } from 'react-native';
+import * as S from './styles';
 
 interface HeaderTitleProps {
   allowFontScaling?: boolean;
@@ -8,7 +8,7 @@ interface HeaderTitleProps {
   onLayout?: (e: LayoutChangeEvent) => void;
 }
 
-function TitleStack(props: HeaderTitleProps): ReactElement {
-  return <S.Title {...props}>{props.children}</S.Title>;
+function TitleStack(props, { children }: HeaderTitleProps): ReactElement {
+  return <S.Title {...props}>{children}</S.Title>;
 }
 export default TitleStack;
