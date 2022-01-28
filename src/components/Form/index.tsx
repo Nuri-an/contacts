@@ -4,13 +4,14 @@ import { ActivityIndicator, View } from 'react-native';
 import { IContactForm } from '~/models/Contacts';
 import { ContactsSchema } from '~/schemas';
 import FormatPhone from '~/utils/formatPhone';
-import { Button, Input } from '..';
+import Input from '../Input';
 import * as S from './styles';
 
 interface IForm {
   initialData: IContactForm;
   titleBtnSubmit: string;
   loadOnSubmit: boolean;
+  loadInitialData?: boolean;
   onSubmit: (values: IContactForm) => void;
 }
 
@@ -18,6 +19,7 @@ function Form({
   initialData,
   titleBtnSubmit,
   loadOnSubmit,
+  loadInitialData,
   onSubmit,
 }: IForm): ReactElement {
   const {
@@ -29,7 +31,11 @@ function Form({
     touched,
     setValues,
   } = useFormik({
-    initialValues: initialData,
+    initialValues: {
+      name: '',
+      mobile: '',
+      email: '',
+    },
     onSubmit,
     validationSchema: ContactsSchema,
   });
@@ -55,12 +61,12 @@ function Form({
   };
 
   useEffect(() => {
-    if (!Object.values(initialData).includes(undefined)) {
+    if (loadInitialData && !Object.values(initialData).includes(undefined)) {
       setValues(initialData);
     }
   }, [initialData]);
 
-  if (Object.values(initialData).includes(undefined))
+  if (loadInitialData && !Object.values(initialData).length)
     return <ActivityIndicator color="#142B5D" />;
 
   return (
@@ -94,7 +100,7 @@ function Form({
           error={!!touched.mobile && errors.mobile}
         />
       </View>
-      <Button
+      <S.CustomButton
         styled="default"
         color="primary"
         text={titleBtnSubmit}

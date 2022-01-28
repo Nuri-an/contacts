@@ -14,7 +14,7 @@ export const Title = styled.Text`
 
   color: ${({ theme }) => theme.colors.primary};
 
-  margin: 51px 0px;
+  margin: ${ResponsiveSize(51)} 0px;
 `;
 
 export const SubTitle = styled.Text`
@@ -26,5 +26,5 @@ export const SubTitle = styled.Text`
 
   color: ${({ theme }) => theme.colors.textSecundary};
 
-  margin: 0px 0px 51px 0px;
+  margin-bottom: ${ResponsiveSize(51)};
 `;

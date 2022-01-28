@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
-import { Platform } from 'react-native';
+import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { Form } from '~/components';
 import { IContactForm } from '~/models/Contacts';
@@ -17,6 +17,8 @@ function Edit(): ReactElement {
     params: { id },
   } = useRoute<RouteProp<ParamList, 'Data'>>();
   const [loading, setLoading] = useState(false);
+  const [loadInitialData, setLoadInitialData] = useState(true);
+  const [inputFocus, setInputFocus] = useState(false);
   const { navigate } = useNavigation();
   const [initialData, setInitialData] = useState({} as IContactForm);
 
@@ -66,20 +68,44 @@ function Edit(): ReactElement {
     handleGetContact();
   }, []);
 
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setLoadInitialData(false);
+      setInputFocus(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setInputFocus(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
-    <S.Container>
-      <S.Content behavior={Platform.OS === 'ios' ? 'height' : 'position'}>
-        <S.Text>
-          Faça as alterções necessárias e {'\n'} ao terminar salve seu contato
-        </S.Text>
-        <Form
-          initialData={initialData}
-          titleBtnSubmit="Salvar alterações"
-          onSubmit={(val) => handlePutContact(val)}
-          loadOnSubmit={loading}
-        />
-      </S.Content>
-    </S.Container>
+    <S.Content
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      contentContainerStyle={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <S.BoxContent>
+          <S.Container isInputFocus={inputFocus}>
+            <S.Text>
+              Faça as alterções necessárias e {'\n'} ao terminar salve seu
+              contato
+            </S.Text>
+            <Form
+              initialData={initialData}
+              titleBtnSubmit="Salvar alterações"
+              onSubmit={(val) => handlePutContact(val)}
+              loadOnSubmit={loading}
+              loadInitialData={loadInitialData}
+            />
+          </S.Container>
+        </S.BoxContent>
+      </TouchableWithoutFeedback>
+    </S.Content>
   );
 }
 export default Edit;

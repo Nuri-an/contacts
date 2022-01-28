@@ -1,10 +1,28 @@
-import styled from 'styled-components/native';
-import { ContainerArea } from '~/styles/objects/ContainerArea';
+import { Dimensions } from 'react-native';
+import styled, { css } from 'styled-components/native';
 import ResponsiveSize from '~/utils/ResponsiveSizes';
+import Constants from 'expo-constants';
+import { ContainerArea } from '~/styles/objects/ContainerArea';
 
-export const Container = styled(ContainerArea)``;
+interface IContainer {
+  isInputFocus?: boolean;
+}
 
 export const Content = styled.KeyboardAvoidingView`
+  flex: 1;
+  background-color: #fff;
+`;
+
+export const Container = styled(ContainerArea)<IContainer>`
+  ${({ isInputFocus }) =>
+    !isInputFocus &&
+    css`
+      min-height: ${Dimensions.get('window').height -
+      (Constants.statusBarHeight + 54)}px;
+    `}
+`;
+
+export const BoxContent = styled.ScrollView`
   flex: 1;
 `;
 
