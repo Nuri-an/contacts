@@ -2,6 +2,13 @@ import styled from 'styled-components/native';
 import { ContainerArea } from '~/styles/objects/ContainerArea';
 import ResponsiveSize from '~/utils/ResponsiveSizes';
 
+export const BoxContent = styled.ScrollView`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #fff;
+`;
+
 export const Container = styled(ContainerArea)`
   justify-content: space-between;
 `;
@@ -35,4 +42,6 @@ export const TextHelp = styled.Text`
   font-size: ${({ theme }) => ResponsiveSize(theme.fontSize.textSecundary)};
   color: ${({ theme }) => theme.colors.textSecundary};
   text-align: right;
+
+  margin-bottom: 50px;
 `;
