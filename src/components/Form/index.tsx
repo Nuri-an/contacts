@@ -4,7 +4,8 @@ import { ActivityIndicator, View } from 'react-native';
 import { IContactForm } from '~/models/Contacts';
 import { ContactsSchema } from '~/schemas';
 import FormatPhone from '~/utils/formatPhone';
-import { Button, Input } from '..';
+import Input from '../Input';
+import Button from '../Button';
 import * as S from './styles';
 
 interface IForm {
