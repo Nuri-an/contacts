@@ -5,3 +5,5 @@ export interface IContact extends IDatabaseFields {
   mobile: string;
   email: string;
 }
+
+export interface IContactForm extends Omit<IContact, keyof IDatabaseFields> {}
