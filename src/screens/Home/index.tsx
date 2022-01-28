@@ -1,7 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  RefreshControl,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -15,10 +17,12 @@ function Home(): ReactElement {
   const [allContacts, setAllContacts] = useState([] as IContact[]);
   const [contacts, setContacts] = useState([] as IContact[]);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [selectedContact, setSelectedContact] = useState<number>();
+  const { navigate } = useNavigation();
 
   const handleGetContacts = useCallback(async () => {
     try {
@@ -42,7 +46,9 @@ function Home(): ReactElement {
         type: 'success',
         message: 'Contato deletado',
       });
+      setShowPopupDelete(false);
       setSelectedContact(undefined);
+      handleGetContacts();
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -72,6 +78,12 @@ function Home(): ReactElement {
       prevSatate.concat(allContacts.slice(page * 6, (page + 1) * 6)),
     );
     setPage(page + 1);
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await handleGetContacts();
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -115,7 +127,7 @@ function Home(): ReactElement {
         styled="default"
         color="primary"
         text="Cadastrar contato"
-        onPress={() => alert('go register')}
+        onPress={() => navigate('Register')}
       />
       <S.FlexBox>
         <S.Text size="text" color="textSecundary">
@@ -144,6 +156,9 @@ function Home(): ReactElement {
         showsVerticalScrollIndicator={false}
         onEndReached={handleLoadList}
         onEndReachedThreshold={0.2}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         ListEmptyComponent={() => <ActivityIndicator color="#142B5D" />}
         renderItem={({ item: contact }) => (
           <Card
