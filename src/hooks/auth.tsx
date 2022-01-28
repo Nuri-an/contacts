@@ -29,6 +29,18 @@ export const AuthProvider: React.FC = ({ children }) => {
         `${PREFIX}:expires_at`,
       );
 
+      const expires_at = new Date(storagedExpiresAt);
+      const newDate = new Date();
+
+      if (newDate.getTime() > expires_at.getTime()) {
+        setAuthData({
+          signed: false,
+          token: undefined,
+          expires_at: undefined,
+        } as IAuthState);
+        return;
+      }
+
       if (storagedSigned && storagedToken) {
         api.defaults.headers.common.Authorization = `Bearer ${storagedToken}`;
         setAuthData({
