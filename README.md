@@ -15,7 +15,7 @@ O seguinte aplicativo consiste em fazer a listagem de contatos, visualização e
   - É possível excluir um contato clicando no ícone de lixeira no canto direito inferior do card e confirmando a ação no pop-up que será aberto.
 
   ### ✍🏽 Criar contato
-  - É possível criar um contato clicando no botão "Cadstrar cotato" no topo d tela e salvando os dados do formulário.
+  - É possível criar um contato clicando no botão "Cadastrar contato" no topo da tela e salvando os dados do formulário.
 
 
   ### 📝 Editar contato
