@@ -62,3 +62,28 @@ export const BoxBtnDelete = styled.View`
 
   width: 100%;
 `;
+
+export const Logo = styled.Image`
+  align-self: center;
+
+  border-radius: 200px;
+
+  height: 100px;
+  width: 100px;
+
+  margin-top: -25%;
+`;
+
+export const BoxMailing = styled.View`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 30px;
+`;
+
+export const BoxBackList = styled.TouchableOpacity`
+  border-top-color: #eeeeee;
+  border-top-width: 1px;
+  padding-top: 20px;
+`;

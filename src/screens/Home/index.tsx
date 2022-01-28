@@ -3,6 +3,7 @@ import { ReactElement, useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  Linking,
   RefreshControl,
   TouchableOpacity,
   View,
@@ -11,16 +12,22 @@ import { showMessage } from 'react-native-flash-message';
 import { Button, Card, Popup } from '~/components';
 import { IContact } from '~/models/Contacts';
 import { ContactsService } from '~/services';
+import Icon from '~/assets/images/Icon.png';
+import { Copy, Mail, PhoneCall } from 'react-native-feather';
+import * as Clipboard from 'expo-clipboard';
+import FormatPhone from '~/utils/formatPhone';
 import * as S from './styles';
 
 function Home(): ReactElement {
   const [allContacts, setAllContacts] = useState([] as IContact[]);
   const [contacts, setContacts] = useState([] as IContact[]);
+  const [contactShow, setContactShow] = useState<IContact>();
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPage] = useState(1);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [showPopupContact, setShowPopupContact] = useState(false);
   const [selectedContact, setSelectedContact] = useState<number>();
   const { navigate } = useNavigation();
 
@@ -60,6 +67,16 @@ function Home(): ReactElement {
       }
     }
   }, [selectedContact]);
+
+  const handleGetContact = useCallback(async (id: number) => {
+    try {
+      const { data } = await ContactsService.getShow(String(id));
+      setContactShow(data);
+      setShowPopupContact(true);
+    } catch (error) {
+      throw new Error('Error fetching contact');
+    }
+  }, []);
 
   const handleLoadList = () => {
     // finished pagination
@@ -123,6 +140,46 @@ function Home(): ReactElement {
           </S.BtnDelete>
         </S.BoxBtnDelete>
       </Popup>
+      <Popup showPopup={showPopupContact}>
+        <S.Logo source={Icon} />
+
+        <S.Text color="primary" size="titleSecundary" isCenter>
+          {contactShow?.name}
+        </S.Text>
+        <S.BoxMailing>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(`mailto:${contactShow?.email}`)}
+          >
+            <Mail color="#424242" width={30} height={30} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(`tel:${contactShow.mobile}`)}
+          >
+            <PhoneCall color="#424242" width={30} height={30} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              Clipboard.setString(
+                `nome: ${contactShow?.name} ${'\n'}email: ${
+                  contactShow?.email
+                } ${'\n'}celular: ${FormatPhone(contactShow?.mobile)}`,
+              )
+            }
+          >
+            <Copy color="#424242" width={30} height={30} />
+          </TouchableOpacity>
+        </S.BoxMailing>
+        <S.BoxBackList
+          onPress={() => {
+            setShowPopupContact(false);
+            setContactShow(undefined);
+          }}
+        >
+          <S.Text color="textSecundary" size="textSecundary" isCenter>
+            Voltar
+          </S.Text>
+        </S.BoxBackList>
+      </Popup>
       <Button
         styled="default"
         color="primary"
@@ -166,7 +223,7 @@ function Home(): ReactElement {
             name={contact.name}
             email={contact.email}
             phone={contact.mobile}
-            onPressCard={(id) => setSelectedContact(id)}
+            onPressCard={(id) => handleGetContact(id)}
             onPressTrash={(id) => {
               setShowPopupDelete(true);
               setSelectedContact(id);
