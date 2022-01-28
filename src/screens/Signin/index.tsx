@@ -17,7 +17,6 @@ function Signin(): ReactElement {
     try {
       setLoading(true);
       await singIn(data);
-      setLoading(false);
     } catch (error) {
       setLoading(false);
       if (error instanceof Error) {
