@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { ReactElement } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Trash2 } from 'react-native-feather';
@@ -23,6 +24,8 @@ function Card({
   onPressCard,
   onPressTrash,
 }: ICard): ReactElement {
+  const { navigate } = useNavigation();
+
   const IconSize = (): string => {
     const newSize = ResponsiveSize(24).split('px')[0];
     return newSize;
@@ -51,7 +54,7 @@ function Card({
             </View>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => alert('go edit contact')}
+              onPress={() => navigate('Edit', { id })}
             >
               <S.Text color="textSecundary" size="text">
                 Editar

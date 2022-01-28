@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { ReactElement } from 'react';
-import { Home, Register } from '~/screens';
+import { Edit, Home, Register } from '~/screens';
 import { RootStackParamList } from '~/@types/RootStackParamList';
 import { ScreenOptions } from './ScreenOptions';
 
@@ -22,6 +22,13 @@ function AppRoutes(): ReactElement {
         }}
         name="Register"
         component={Register}
+      />
+      <Stack.Screen
+        options={{
+          title: 'Atualizar contato',
+        }}
+        name="Edit"
+        component={Edit}
       />
     </Stack.Navigator>
   );
